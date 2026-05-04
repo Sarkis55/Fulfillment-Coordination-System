@@ -1,0 +1,101 @@
+Location,Product,Inventory Level,Units Sold,Price
+Northridge,Mouse,250,130,25
+Long Beach,Camera,237,127,200
+Ontario,Keyboard,263,113,70
+Ontario,Headphones,298,154,120
+Ontario,Speaker,279,152,150
+Santa Monica,Headphones,285,143,120
+Monterey Park,Monitor,0,131,300
+Northridge,Keyboard,274,142,70
+Northridge,Speaker,298,152,150
+Long Beach,Printer,281,119,200
+Long Beach,Webcam,278,125,80
+Santa Monica,Router,311,180,130
+Santa Monica,Speaker,264,123,150
+Long Beach,Hard Drive,226,121,100
+Ontario,Graphics Card,296,180,600
+Santa Monica,Graphics Card,303,140,600
+Monterey Park,Hard Drive,264,123,100
+Northridge,Hard Drive,238,107,100
+Northridge,Smartwatch,265,110,250
+Long Beach,Keyboard,252,117,70
+Long Beach,Headphones,280,168,120
+Monterey Park,Camera,292,151,200
+Monterey Park,Mouse,0,116,25
+Long Beach,Monitor,252,145,300
+Santa Monica,Hard Drive,288,126,100
+Santa Monica,Keyboard,246,145,70
+Santa Monica,Mouse,312,155,25
+Long Beach,Drone,218,109,800
+Santa Monica,Smartwatch,243,123,250
+Northridge,Monitor,268,107,300
+Santa Monica,Monitor,257,144,300
+Ontario,Monitor,0,124,300
+Ontario,Projector,258,129,700
+Santa Monica,Camera,290,159,200
+Santa Monica,Tablet,286,156,400
+Northridge,Projector,316,159,700
+Monterey Park,Projector,296,153,700
+Monterey Park,PS5,0,136,500
+Ontario,Camera,272,136,200
+Ontario,Microphone,285,135,150
+Ontario,PS5,0,143,500
+Santa Monica,Printer,257,133,200
+Monterey Park,VR Headset,0,156,400
+Monterey Park,Shredder,300,144,120
+Northridge,Tablet,316,158,400
+Long Beach,Shredder,256,135,120
+Ontario,Smartwatch,308,156,250
+Ontario,Scale,319,137,50
+Monterey Park,Webcam,248,138,80
+Long Beach,Scale,275,129,50
+Ontario,Hard Drive,280,140,100
+Santa Monica,PS5,0,90,500
+Monterey Park,Smartwatch,305,180,250
+Northridge,Shredder,0,126,120
+Ontario,Shredder,288,158,120
+Santa Monica,Drone,284,143,800
+Northridge,Printer,0,141,200
+Ontario,Drone,256,119,800
+Monterey Park,Speaker,282,167,150
+Northridge,Graphics Card,261,132,600
+Long Beach,PS5,0,149,500
+Monterey Park,Printer,278,127,200
+Northridge,Router,222,93,130
+Northridge,Camera,265,139,200
+Northridge,VR Headset,255,101,400
+Long Beach,Microphone,261,157,150
+Santa Monica,Scale,284,139,50
+Santa Monica,Microphone,289,162,150
+Ontario,Router,271,149,130
+Monterey Park,Scale,252,131,50
+Long Beach,Router,242,105,130
+Long Beach,Mouse,300,159,25
+Ontario,Webcam,0,122,80
+Long Beach,Speaker,293,141,150
+Santa Monica,Projector,234,109,700
+Long Beach,Tablet,270,136,400
+Monterey Park,Tablet,274,164,400
+Ontario,Mouse,257,127,25
+Monterey Park,Headphones,301,146,120
+Ontario,Printer,295,134,200
+Northridge,Microphone,279,145,150
+Ontario,Tablet,232,94,400
+Northridge,Headphones,239,141,120
+Long Beach,Graphics Card,312,158,600
+Monterey Park,Router,303,124,130
+Monterey Park,Microphone,272,151,150
+Ontario,VR Headset,298,169,400
+Long Beach,VR Headset,0,132,400
+Long Beach,Projector,293,151,700
+Monterey Park,Drone,282,156,800
+Northridge,Drone,295,139,800
+Monterey Park,Keyboard,276,130,70
+Northridge,Scale,274,118,50
+Northridge,Webcam,279,168,80
+Long Beach,Smartwatch,275,131,250
+Santa Monica,VR Headset,0,170,400
+Northridge,PS5,262,143,500
+Santa Monica,Webcam,252,163,80
+Monterey Park,Graphics Card,289,111,600
+Santa Monica,Shredder,0,143,120

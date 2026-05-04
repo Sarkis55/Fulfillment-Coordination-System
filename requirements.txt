@@ -1,0 +1,5 @@
+crewai>=0.80.0
+pandas>=2.0.0
+openai>=1.0.0
+simpy>=4.1.1
+python-dotenv>=1.0.0
