@@ -1,68 +1,184 @@
-# Order-Fulfillment-Coordinator
-Order fulfillment may appear straightforward – receive the order, pick the item, ship the
-package – but in practice, it is a complex coordination challenge shaped by varying
-conditions. Each order requires multiple interdependent decisions, such as which
-warehouse or store should fulfill it, whether orders containing multiple items should be
-split across locations, how limited pick-pack capacity should be allocated, and which
-shipping option can meet the promised delivery date without driving up costs. These
-decisions are made under uncertainty, where inventory fluctuates, labor capacity varies,
-carrier cut-off times impose constraints, and unexpected disruptions such as delays or
-out-of-stock items. Conventional rule-based systems and rigid optimization models often
-struggle in this environment because they rely on fixed logic that cannot adapt to
-competing priorities and real-time changes.
+# Fulfillment Coordination System
 
-This project approaches order fulfillment as a multi-agent system composed of
-specialized decision-makers: an Order Intake agent that manages priorities and delivery
-commitments, an Inventory agent tracking stock availability, a Pick-pack Capacity agent
-modeling operational constraints, a Carrier/Shipping agent that evaluates delivery
-options, and a Routing/Allocation Coordinator agent that orchestrates the final plan.
-These agents interact and negotiate to generate fulfillment strategies that balance speed,
-cost, and reliability. When conditions shift – such as limited stock or shipping delays –
-The agents collaborate and adjust decisions. By simulating decentralized coordination and
-adaptive planning, the project investigates how multi-agent approaches can create more
-flexible, efficient, and resilient processes in a domain where no straightforward software
-solution exists.
+A Python-based multi-agent fulfillment coordination prototype built with CrewAI and SimPy. The system simulates how customer orders can be routed across multiple warehouses while considering inventory, warehouse capacity, shipping tiers, carrier cutoff times, and operational disruptions.
 
-## Implementation:
+## Project Overview
 
-First, create an environment or world state that includes dataclasses holding:
-- Nodes (Warehouses A, B, C):
-  - Inventory
-  - Pick-pack capacity (units/hr)
-  - Current_queue: (busy, free, etc.)
-- Carriers with:
-  - Services (standard, express, next-day shipping)
-  - Cost model (base + per item/weight)
-  - Cutoff time (when do they stop taking in orders to ship)
-- Orders:
-  - Order numbers, timestamps, SKUs, and quantities of items
-  - Estimated delivery
-  - Priority or not
-- Reservations:
-  - Prevents double allocation
-  - Tracks the reserved quantity per warehouse per order.
+Order fulfillment is more complex than simply receiving an order and shipping a package. A real fulfillment system has to decide which warehouse should handle the order, whether multiple items should be shipped together or split across locations, whether a warehouse has enough pick-pack capacity, and which carrier can meet the promised delivery window.
 
-Next would be to implement an event-driven simulation using the SimPy library, which is
-a discrete event simulation framework, which will include components such as order
-arrivals, pick/pack processing, shipping cutoffs, delivery times, and disruptions (delays,
-out-of-stock, etc.)
+This project models that problem as a multi-agent coordination system. Instead of using one large decision-making block, the system separates the fulfillment process into specialized agents. Each agent focuses on one part of the problem, then the coordinator combines their results into a final fulfillment recommendation.
 
-- Implement Agents:
-  - **Order Intake Agent:** Manages priorities and delivery commitments.
-  - **Inventory Agent:** Tracks stock availability.
-  - **Pick-pack Capacity Agent:** estimates readiness and checks available warehouses
-that can fulfill the order.
-  - **Carrier/Shipping Agent:** Evaluates delivery options
-  - **Routing/Allocation Coordinator Agent:** orchestrates the plan and commits.
-    
-- The coordination algorithm (How the Coordinator runs per order)
-  - Requests feasible nodes from the Inventory agent.
-  - For each candidate node:
-    - Asks the capacity agent for a readiness estimate
-    - Asks the carrier agent for shipping options and cutoff time
-  - Generates a plan for the order:
-    - A single-node plan is preferable; otherwise, the plan will be split across
-different nodes.
-  - Scores each plan:
-    - Metrics include lateness risk + cost + time-to-ship + split penalty
-    - Selects the plan with the lowest score and processes the order.
+## Technical Objective
+
+The technical objective of this project is to demonstrate how a multi-agent system can improve fulfillment planning in a changing environment. The system is designed to:
+
+- Accept customer orders with one or more products
+- Check inventory across multiple warehouse locations
+- Evaluate whether a single warehouse can fulfill the full order
+- Create a split-shipment plan when needed
+- Check warehouse queue status and pick-pack capacity
+- Account for random warehouse and carrier disruptions
+- Check carrier cutoff times and delivery tiers
+- Produce a final coordinated fulfillment plan
+
+## Architecture
+
+The system follows a **fan-out / fan-in architecture**.
+
+In the **fan-out stage**, the incoming order is broken into smaller tasks and sent to specialized agents:
+
+- **Order Intake Specialist** validates and structures the order
+- **Inventory Manager** checks product availability across warehouses
+- **Warehouse Capacity Analyst** evaluates warehouse readiness, queues, and pick-pack rates
+- **Carrier and Shipping Evaluator** checks shipping options, delivery tiers, carrier cutoffs, and delays
+
+In the **fan-in stage**, the **Fulfillment Coordinator** gathers the results from the other agents and produces one final recommendation. This recommendation considers inventory, capacity, disruptions, shipment type, carrier availability, cost, and delivery speed.
+
+This structure makes the system easier to understand, expand, and debug because each agent has a specific responsibility.
+
+## Current Features
+
+- Terminal-based order entry
+- Product catalog loaded from `inventory_data.csv`
+- Multi-product order support
+- Delivery tier selection: standard, premium, and express
+- Inventory checks across Los Angeles-area warehouses
+- Single-shipment vs. split-shipment fulfillment planning
+- Warehouse queue and pick-pack capacity modeling
+- Random warehouse disruptions
+- Random carrier disruptions
+- Carrier cutoff checks
+- Simulated world state using SimPy
+- CrewAI-based agent workflow
+
+## Agents
+
+| Agent | Responsibility |
+|---|---|
+| Order Intake Specialist | Receives and validates customer order details |
+| Inventory Manager | Checks stock availability across warehouse locations |
+| Warehouse Capacity Analyst | Evaluates warehouse capacity, queue status, and processing time |
+| Carrier and Shipping Evaluator | Evaluates carrier options, delivery tiers, cutoff times, and delays |
+| Fulfillment Coordinator | Combines agent outputs and creates the final fulfillment plan |
+
+## Project Files
+
+| File | Purpose |
+|---|---|
+| `main.py` | Runs the terminal application, displays catalog, collects user input, and starts the crew |
+| `agents.py` | Defines the CrewAI agents and their responsibilities |
+| `tasks.py` | Builds the task sequence for the agents |
+| `crew.py` | Creates the CrewAI crew using a hierarchical process |
+| `tools.py` | Contains inventory, warehouse, and fulfillment planning tools |
+| `world_state.py` | Defines the simulated environment, warehouses, carriers, tiers, and disruptions |
+| `world_state_tools.py` | Provides CrewAI tools for accessing world state information |
+| `inventory_data.csv` | Stores warehouse inventory data |
+| `requirements.txt` | Lists the required Python dependencies |
+
+## Requirements
+
+This project uses:
+
+- Python 3.10+
+- CrewAI
+- pandas
+- OpenAI
+- SimPy
+- python-dotenv
+
+Install dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Setup
+
+Clone the repository:
+
+```bash
+git clone git@github.com:Sarkis55/Fulfillment-Coordination-System.git
+cd Fulfillment-Coordination-System
+```
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+On Windows, use:
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a `.env` file if your CrewAI/OpenAI setup requires an API key:
+
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
+
+## How to Run
+
+Run the system from the project folder:
+
+```bash
+python main.py
+```
+
+The program will:
+
+1. Display the available product catalog
+2. Show active warehouse and carrier disruptions
+3. Ask the user to enter products and quantities
+4. Ask for the user's location
+5. Ask for a delivery tier
+6. Run the CrewAI agents
+7. Print the final fulfillment recommendation
+
+## Example Workflow
+
+A user may enter an order such as:
+
+```text
+Product name : Keyboard
+Quantity     : 2
+Add more items? y
+Product name : Monitor
+Quantity     : 1
+Your location : Burbank
+Delivery tier : Premium Delivery
+```
+
+The system then checks which warehouses have the products, whether one warehouse can fulfill everything, whether any warehouses are disrupted, whether carriers are still accepting packages, and what the best fulfillment plan should be.
+
+## What Was Completed
+
+The completed prototype includes the core multi-agent architecture, inventory tools, world state simulation, delivery tier logic, disruption handling, and terminal-based user interaction. The system can accept an order, evaluate inventory and warehouse readiness, check shipping constraints, and generate a coordinated fulfillment recommendation.
+
+## Future Work
+
+Planned improvements include:
+
+- Adding a map API to calculate actual user location and distance from warehouses
+- Building a sleek user interface so users can select products instead of typing them manually
+- Adding more disruption events, such as Black Friday, Cyber Monday, and high-volume sale periods
+- Allowing the Order Intake Agent to prioritize multiple orders at once
+- Improving routing logic with real carrier rates and estimated delivery APIs
+- Adding persistent order records and reservation logic to prevent double allocation
+
+## Lessons Learned
+
+This project helped demonstrate how CrewAI can be used to organize multiple agents around a shared decision-making process. It also showed how SimPy can be used to model a changing fulfillment environment with warehouse capacity, queue status, and disruptions. One of the main challenges was connecting all parts of the system together, especially the agents, tools, tasks, and world state. Another challenge was keeping each agent's responsibility clear so the system stayed organized and understandable.
+
+## Status
+
+This project is currently a working prototype. It is designed for demonstration and learning purposes, but the architecture can be expanded into a more realistic fulfillment coordination platform with real APIs, a user interface, and stronger multi-order prioritization.
