@@ -1,7 +1,8 @@
 # Fulfillment Coordination System
+by Sarkis Shil-Gevorkyan
 
-A Python-based multi-agent fulfillment coordination prototype built with CrewAI and SimPy. The system simulates how customer orders can be routed across multiple warehouses while considering inventory, warehouse capacity, shipping tiers, carrier cutoff times, and operational disruptions.
 
+-----
 ## Project Overview
 
 Order fulfillment is more complex than simply receiving an order and shipping a package. A real fulfillment system has to decide which warehouse should handle the order, whether multiple items should be shipped together or split across locations, whether a warehouse has enough pick-pack capacity, and which carrier can meet the promised delivery window.
@@ -157,27 +158,6 @@ Quantity     : 1
 Your location : Burbank
 Delivery tier : Premium Delivery
 ```
-
-The system then checks which warehouses have the products, whether one warehouse can fulfill everything, whether any warehouses are disrupted, whether carriers are still accepting packages, and what the best fulfillment plan should be.
-
-## What Was Completed
-
-The completed prototype includes the core multi-agent architecture, inventory tools, world state simulation, delivery tier logic, disruption handling, and terminal-based user interaction. The system can accept an order, evaluate inventory and warehouse readiness, check shipping constraints, and generate a coordinated fulfillment recommendation.
-
-## Future Work
-
-Planned improvements include:
-
-- Adding a map API to calculate actual user location and distance from warehouses
-- Building a sleek user interface so users can select products instead of typing them manually
-- Adding more disruption events, such as Black Friday, Cyber Monday, and high-volume sale periods
-- Allowing the Order Intake Agent to prioritize multiple orders at once
-- Improving routing logic with real carrier rates and estimated delivery APIs
-- Adding persistent order records and reservation logic to prevent double allocation
-
-## Lessons Learned
-
-This project helped demonstrate how CrewAI can be used to organize multiple agents around a shared decision-making process. It also showed how SimPy can be used to model a changing fulfillment environment with warehouse capacity, queue status, and disruptions. One of the main challenges was connecting all parts of the system together, especially the agents, tools, tasks, and world state. Another challenge was keeping each agent's responsibility clear so the system stayed organized and understandable.
 
 ## Status
 
